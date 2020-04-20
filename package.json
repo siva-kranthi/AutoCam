@@ -1,6 +1,6 @@
 {
-  "name": "electron-webpack-quick-start",
-  "version": "0.0.0",
+  "name": "AutoCam",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "dev": "electron-webpack dev",
@@ -9,9 +9,11 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
+    "antd": "^4.1.4",
+    "babel-plugin-import": "^1.13.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.17"
   },
   "devDependencies": {
     "electron": "8.2.0",

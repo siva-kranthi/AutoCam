@@ -1,0 +1,160 @@
+<html>
+  <head>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #1e2124;
+        color: #6c757d;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .aligner-center-center {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .aligner-content {
+        position: relative;
+        width: 100%;
+        padding: 80px;
+        text-align: center;
+      }
+      svg {
+        position: relative;
+        width: 100%;
+      }
+      .loading {
+        padding-top: 10px;
+        position: relative;
+      }
+      .bar {
+        position: relative;
+        height: 2px;
+        background: #262b2f;
+      }
+      .progress {
+        position: relative;
+        height: 2px;
+        background: #3d90ce;
+        box-shadow: 0 0 20px #3d90ce;
+        animation-name: loader-animation;
+        animation-duration: 1.6s;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-in-out;
+      }
+
+      @keyframes loader-animation {
+        0% {
+          left: 0;
+          width: 0px;
+        }
+        50% {
+          left: 0;
+          width: 100%;
+        }
+        100% {
+          left: 100%;
+          width: 0px;
+        }
+      }
+      .glow-wrapper {
+        position: relative;
+        width: 100%;
+        height: 2px;
+        top: -2px;
+      }
+
+      .glow {
+        height: 100%;
+        display: flex;
+        transform: translateZ(0);
+      }
+
+      .glow div {
+        flex: 1;
+        background: #3d90ce;
+        animation: glow 0.8s infinite alternate ease;
+        box-shadow: 0 0 20px #3d90ce;
+      }
+
+      .glow div.b1 {
+        animation-delay: -0.72s;
+      }
+      .glow div.b2 {
+        animation-delay: -0.64s;
+      }
+      .glow div.b3 {
+        animation-delay: -0.56s;
+      }
+      .glow div.b4 {
+        animation-delay: -0.48s;
+      }
+      .glow div.b5 {
+        animation-delay: -0.4s;
+      }
+      .glow div.b6 {
+        animation-delay: -0.32s;
+      }
+      .glow div.b7 {
+        animation-delay: -0.24s;
+      }
+      .glow div.b8 {
+        animation-delay: -0.16s;
+      }
+      .glow div.b9 {
+        animation-delay: -0.08s;
+      }
+
+      @keyframes glow {
+        100% {
+          background: transparent;
+          flex: 10;
+          box-shadow: 0 0 0 transparent;
+        }
+      }
+
+      .text {
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="aligner-center-center">
+      <div class="aligner-content">
+        <img src="logo.png" style="width: 100px;" />
+        <div class="loading">
+          <div class="bar">
+            <div class="progress"></div>
+          </div>
+          <div class="glow-wrapper">
+            <div class="glow">
+              <div class="b1"></div>
+              <div class="b2"></div>
+              <div class="b3"></div>
+              <div class="b4"></div>
+              <div class="b5"></div>
+              <div class="b6"></div>
+              <div class="b7"></div>
+              <div class="b8"></div>
+              <div class="b9"></div>
+            </div>
+          </div>
+          <div class="text">
+            Loading...
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
