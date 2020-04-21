@@ -1,0 +1,83 @@
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+  background-color: #23272f;
+  color: #cccccc;
+}
+
+#app {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 48px 1fr;
+}
+
+.Body {
+  display: grid;
+  grid-template-columns: 0.6fr 3.4fr;
+  overflow: hidden;
+}
+
+.Content {
+  overflow-y: scroll;
+  padding: 20px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  border: 3px solid #23272f;
+  background: #363d49;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: #23272f;
+}
+
+::-webkit-scrollbar-thumb:vertical:active {
+  border-radius: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+}
+
+::-webkit-scrollbar-thumb:horizontal:active {
+  border-radius: 0;
+  border-top-width: 0;
+  border-bottom-width: 0;
+}
+
+/* File Tree Styles */
+
+.FileTreeContainer {
+  background-color: #21252b;
+  border-right: 1px solid #1a1d23;
+  grid-template-rows: 28px 1fr;
+  display: grid;
+  overflow: auto;
+}
+
+.FileTree {
+  overflow: auto;
+}
+
+.Title {
+  padding: 3px 15px 2px;
+  border-bottom: 1px solid #1a1d23;
+  background-color: #292e38;
+}
+
+@import url("./antOW.css");
