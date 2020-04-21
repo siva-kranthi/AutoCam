@@ -1,3 +1,12 @@
 .ant-tree .ant-tree-node-content-wrapper {
-  margin-left: -12px;
+  margin-left: -10px;
+}
+
+.ant-tree-title {
+  margin-left: 5px;
+}
+
+.ant-typography,
+.ant-tree {
+  color: rgb(255, 255, 255, 0.85);
 }

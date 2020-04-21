@@ -1,3 +1,5 @@
+@import url("./antOW.css");
+
 body {
   height: 100%;
   width: 100%;
@@ -60,7 +62,7 @@ body {
   border-bottom-width: 0;
 }
 
-/* File Tree Styles */
+/******************************** File Tree Styles ********************************/
 
 .FileTreeContainer {
   background-color: #21252b;
@@ -80,4 +82,35 @@ body {
   background-color: #292e38;
 }
 
-@import url("./antOW.css");
+/******************************** Header ********************************/
+
+.Header {
+  border-bottom: 1px solid #1a1d23;
+}
+
+.IconsMenu {
+  text-align: center;
+  padding: 0;
+  font-size: 35px;
+  list-style: none;
+  height: 48px;
+  line-height: 48px;
+  margin: 0;
+}
+
+.IconsMenu li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+.IconsMenu a {
+  color: rgb(255, 255, 255, 0.85);
+}
+
+.IconsMenu a:hover {
+  color: rgb(255, 255, 255);
+}
+
+.IconsMenu .run {
+  font-size: 31px;
+}

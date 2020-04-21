@@ -11,7 +11,7 @@ function FileTree(props) {
 
   console.log(directory, directoryTree);
 
-  let treeData = [directoryTree(directory)];
+  let treeData = [directoryTree(directory)]; // TODO: , { exclude: "/  .git/" })
   console.log(treeData);
   const expandKey = treeData[0].key;
 
