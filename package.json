@@ -17,6 +17,7 @@
     "monaco-editor": "^0.20.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hotkeys": "^2.0.0",
     "source-map-support": "^0.5.17"
   },
   "devDependencies": {

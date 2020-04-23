@@ -1,29 +1,41 @@
 import React, { Component } from "react";
 import p from "path";
 import * as fs from "fs";
+import { remote } from "electron";
+import { HotKeys, GlobalHotKeys, configure } from "react-hotkeys";
 
 import FileTree from "./FileTree";
 import Header from "./Header";
 import TabManager from "./TabManager";
-import Editor from "./Editor";
 import { isFile } from "./utils";
+
+const dialog = remote.dialog;
+
+configure({
+  ignoreTags: [],
+});
 
 class App extends Component {
   state = {
+    // Icons
     directory: "C:\\Dev\\AutoCam\\temp\\Camera",
+
+    // FileTree
     files: [],
 
     // TabManager
     activeKey: "",
-    panes: {},
+    panes: {}, // TODO: Without maintaing the file content. it is blinking in long files while editing
   };
 
   // Header
+
   setDirectory = (directory) => {
     this.setState({ directory });
   };
 
   // FileTree
+
   onFilesSelect = (files) => {
     this.setState({ files });
     console.log("App -> onFilesSelect -> files", files);
@@ -40,6 +52,20 @@ class App extends Component {
     }
   };
 
+  // Editor
+
+  saveFile = () => {
+    const { activeKey, panes } = this.state;
+    if ("unSaved" in panes[activeKey]) {
+      fs.writeFile(activeKey, panes[activeKey].content, (err) => {
+        if (err) throw err;
+        delete panes[activeKey].unSaved;
+        console.log("App -> saveFile -> panes", panes);
+        this.setState({ panes });
+      });
+    }
+  };
+
   // TabManager
 
   changePane = (activeKey) => {
@@ -50,13 +76,15 @@ class App extends Component {
 
   addPane = (activeKey, title, content) => {
     const { panes } = this.state;
-    panes[activeKey] = { title, content };
+    if (!(activeKey in panes)) panes[activeKey] = { title, content };
     this.setState({ panes, activeKey });
   };
 
   updatePane = (targetKey, content) => {
+    console.log("App -> updatePane -> targetKey, content", targetKey, content);
     const { panes } = this.state;
-    panes[targetKey][content] = content;
+    panes[targetKey].content = content;
+    panes[targetKey].unSaved = true;
     this.setState({ panes });
   };
 
@@ -71,6 +99,29 @@ class App extends Component {
     let { activeKey, panes } = this.state;
     const paneKeys = Object.keys(panes);
     let targetIndex;
+
+    // Saving file
+    if ("unSaved" in panes[targetKey]) {
+      const options = {
+        title: "AutoCam",
+        message: `Do you want to Save the Changes yo made to ${panes[targetKey].title}?`,
+        detail: `Your changes will be lost if you don't save them`,
+        type: "warning",
+        buttons: ["Cancel", "Don't Save", "Save"],
+        defaultId: 2,
+        noLink: true,
+      };
+      const response = dialog.showMessageBoxSync(options);
+      console.log("App -> removePane -> response", response);
+
+      if (response == 2) {
+        fs.writeFile(targetKey, panes[targetKey].content, (err) => {
+          if (err) throw err;
+        });
+      } else if (response == 0) {
+        return false;
+      }
+    }
 
     paneKeys.forEach((paneKey, i) => {
       if (paneKey === targetKey) {
@@ -93,10 +144,18 @@ class App extends Component {
   render() {
     console.log("App Render");
 
-    const openFile = this.state.openFile;
+    const handlers = { saveFile: this.saveFile };
+    const keyMap = {
+      saveFile: "ctrl+s",
+    };
+
     return (
       <>
-        <Header setDirectory={this.setDirectory}></Header>
+        <GlobalHotKeys keyMap={keyMap} handlers={handlers} />
+        <Header
+          setDirectory={this.setDirectory}
+          saveFile={this.saveFile}
+        ></Header>
         <main className="Body">
           <FileTree
             directory={this.state.directory}

@@ -1,25 +1,30 @@
-import React, { Component } from "react";
+import React, { Component, useRef } from "react";
 import * as path from "path";
 
 delete window.require;
 delete window.exports;
 delete window.module;
 
-import { ControlledEditor as MonacoEditor, monaco } from "@monaco-editor/react";
+import MonacoEditor, { ControlledEditor, monaco } from "@monaco-editor/react";
 
 const Editor = React.memo(function Editor(props) {
   console.log("Editor -> props", props);
+  const valueGetter = useRef();
 
-  const editorDidMount = (valueFunc, monaco) => {
-    console.log("editorDidMount");
-    monaco.focus();
+  const editorDidMount = (getValue, editor) => {
+    editor.focus();
+    editor.onDidChangeModelContent((ev) => {
+      const newValue = editor.getValue();
+      console.log("editorDidMount -> newValue", newValue);
+      props.updatePane(props.paneKey, newValue);
+    });
   };
 
-  const onChange = (newValue, e) => {
-    console.log("onChange -> props.paneKey", props.paneKey);
-    console.log("onChange -> newValue", newValue);
-    props.updatePane(props.paneKey, newValue);
-  };
+  // const onChange = (newValue, e) => {
+  //   console.log("onChange -> props.paneKey", props.paneKey);
+  //   console.log("onChange -> newValue", newValue);
+  //   props.updatePane(props.paneKey, newValue);
+  // };
 
   monaco.config({ paths: { vs: path.join(__static, "/vs") } });
   // monaco.config({
@@ -43,7 +48,6 @@ const Editor = React.memo(function Editor(props) {
       theme="dark"
       value={props.content}
       options={options}
-      onChange={onChange}
       editorDidMount={editorDidMount}
     />
   );

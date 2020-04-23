@@ -1,5 +1,9 @@
 import React from "react";
-import { FolderAddOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import {
+  FolderAddOutlined,
+  PlayCircleOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
 import { remote } from "electron";
 
 const dialog = remote.dialog;
@@ -27,6 +31,11 @@ function Header(props) {
         <li>
           <a title="Open the Folder" onClick={onClick}>
             <FolderAddOutlined />
+          </a>
+        </li>
+        <li>
+          <a title="Save File" onClick={props.saveFile}>
+            <SaveOutlined />
           </a>
         </li>
         <li className="run">

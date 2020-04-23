@@ -13,7 +13,6 @@ const FileTree = React.memo(function FileTree(props) {
 
   let treeData = [directoryTree(directory)]; // TODO: , { exclude: "/  .git/" })
   console.log("FileTree -> treeData", treeData);
-  const expandKey = treeData[0].key;
 
   const onSelect = (keys, event) => {
     console.log("Trigger Select", keys, event);

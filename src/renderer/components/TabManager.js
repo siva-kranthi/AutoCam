@@ -22,11 +22,12 @@ class TabManager extends Component {
         animated
       >
         {panes.map((pane, i) => {
-          // const style = i == 0 ? { height: "100vh" } : "";
+          const title =
+            "unSaved" in pane[1] ? `⚈ ${pane[1].title}` : pane[1].title; //\u25CF \u2B24
 
           return (
             <TabPane
-              tab={pane[1].title}
+              tab={title}
               key={pane[0]}
               style={{ height: "calc(100vh - 98px)" }}
             >
