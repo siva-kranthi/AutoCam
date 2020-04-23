@@ -34,11 +34,11 @@ const FileTree = React.memo(function FileTree(props) {
           showIcon
           switcherIcon={<DownOutlined />}
           treeData={treeData}
-          expandedKeys={[expandKey]}
+          defaultExpandedKeys={[expandKey]} // TODO: maintaining expand keys state
           multiple
           onSelect={onSelect}
           onExpand={onExpand}
-          ShowLine
+          // ShowLine
         />
       </section>
     </nav>

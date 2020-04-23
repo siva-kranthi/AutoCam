@@ -5,7 +5,7 @@ import Editor from "./Editor";
 
 const { TabPane } = Tabs;
 
-class TabManager extends PureComponent {
+class TabManager extends Component {
   render() {
     console.log("TabManager -> render -> this.props", this.props);
 
@@ -19,17 +19,26 @@ class TabManager extends PureComponent {
         activeKey={this.props.activeKey}
         type="editable-card"
         onEdit={this.props.editPane}
+        animated
       >
-        {panes.map((pane) => (
-          <TabPane tab={pane[1].title} key={pane[0]}>
-            {/* {pane[1].content} */}
-            <Editor
-              content={pane[1].content}
-              paneKey={pane[0]}
-              updatePaneContent={this.props.updatePane}
-            />
-          </TabPane>
-        ))}
+        {panes.map((pane, i) => {
+          // const style = i == 0 ? { height: "100vh" } : "";
+
+          return (
+            <TabPane
+              tab={pane[1].title}
+              key={pane[0]}
+              style={{ height: "calc(100vh - 98px)" }}
+            >
+              {/* {pane[1].content} */}
+              <Editor
+                content={pane[1].content}
+                paneKey={pane[0]}
+                updatePane={this.props.updatePane}
+              />
+            </TabPane>
+          );
+        })}
       </Tabs>
     );
   }

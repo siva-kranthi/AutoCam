@@ -62,7 +62,7 @@ body {
 .FileTreeContainer {
   background-color: #21252b;
   border-right: 1px solid #1a1d23;
-  grid-template-rows: 28px 1fr;
+  grid-template-rows: 40px 1fr;
   display: grid;
   overflow: auto;
 }
@@ -75,6 +75,7 @@ body {
   padding: 3px 15px 2px;
   border-bottom: 1px solid #1a1d23;
   background-color: #292e38;
+  line-height: 40px;
 }
 
 /******************************** Header ********************************/

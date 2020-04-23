@@ -12,12 +12,13 @@ const Editor = React.memo(function Editor(props) {
 
   const editorDidMount = (valueFunc, monaco) => {
     console.log("editorDidMount");
-    // monaco.focus();
+    monaco.focus();
   };
 
   const onChange = (newValue, e) => {
-    console.log("onChange", newValue, e);
-    props.updatePaneContent(props.paneKey, newValue);
+    console.log("onChange -> props.paneKey", props.paneKey);
+    console.log("onChange -> newValue", newValue);
+    props.updatePane(props.paneKey, newValue);
   };
 
   monaco.config({ paths: { vs: path.join(__static, "/vs") } });

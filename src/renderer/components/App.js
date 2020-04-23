@@ -61,6 +61,9 @@ class App extends Component {
   };
 
   editPane = (targetKey, action) => {
+    console.log("App -> editPane -> action", action);
+    console.log("App -> editPane -> targetKey", targetKey);
+
     if (action === "remove") this.removePane(targetKey);
   };
 
@@ -78,10 +81,10 @@ class App extends Component {
     delete panes[targetKey];
 
     if (paneKeys.length && activeKey === targetKey) {
-      if (targetIndex > 0) {
+      if (targetIndex == paneKeys.length - 1) {
         activeKey = paneKeys[targetIndex - 1];
       } else {
-        activeKey = paneKeys[0];
+        activeKey = paneKeys[targetIndex + 1];
       }
     }
     this.setState({ panes, activeKey });
@@ -100,11 +103,6 @@ class App extends Component {
             onFilesSelect={this.onFilesSelect}
           />
           <section className="Content">
-            {/* <Editor
-              content="ssdd fdf d f"
-              paneKey="21"
-              updatePaneContent="saa"
-            /> */}
             {Object.keys(this.state.panes).length > 0 && (
               <TabManager
                 activeKey={this.state.activeKey}
