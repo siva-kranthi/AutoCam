@@ -1,1 +1,1 @@
-export { default as directoryTree } from "./file";
+export { directoryTree, isFile } from "./file";

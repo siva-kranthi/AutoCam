@@ -124,4 +124,8 @@ function directoryTree(path, options, onEachFile, onEachDirectory) {
   return item;
 }
 
-export default directoryTree;
+function isFile(path) {
+  return !!p.extname(path);
+}
+
+export { directoryTree, isFile };

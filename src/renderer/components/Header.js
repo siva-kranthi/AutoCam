@@ -13,18 +13,19 @@ function Header(props) {
     properties: ["openDirectory"],
   };
 
-  const openDialog = () => {
+  // Opening folder select dialog
+  const onClick = () => {
     dir = dialog.showOpenDialogSync(options);
     console.log(dir);
     console.log("hiihii");
-    props.onOpenDialogSelect(dir[0]);
+    props.setDirectory(dir[0]);
   };
 
   return (
     <header className="Header">
       <ul className="IconsMenu">
         <li>
-          <a title="Open the Folder" onClick={openDialog}>
+          <a title="Open the Folder" onClick={onClick}>
             <FolderAddOutlined />
           </a>
         </li>

@@ -14,21 +14,21 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 let mainWindow;
 
 function createMainWindow() {
-  const splashWindow = new BrowserWindow({
-    width: 550,
-    height: 350,
-    backgroundColor: "#1e2124",
-    center: true,
-    frame: false,
-    resizable: false,
-    show: false,
-  });
+  // const splashWindow = new BrowserWindow({
+  //   width: 550,
+  //   height: 350,
+  //   backgroundColor: "#1e2124",
+  //   center: true,
+  //   frame: false,
+  //   resizable: false,
+  //   show: false,
+  // });
 
-  splashWindow.loadFile(path.join(__static, "/splash.html"));
+  // splashWindow.loadFile(path.join(__static, "/splash.html"));
 
-  splashWindow.once("ready-to-show", () => {
-    splashWindow.show();
-  });
+  // splashWindow.once("ready-to-show", () => {
+  //   splashWindow.show();
+  // });
 
   const window = new BrowserWindow({
     width: 1280,
@@ -36,20 +36,21 @@ function createMainWindow() {
     minWidth: 830,
     minHeight: 430,
     backgroundColor: "#2a2522",
-    show: false,
+    // show: false,
     titleBarStyle: "hidden",
     webPreferences: {
       nodeIntegration: true,
+      webSecurity: false,
     },
     icon: path.join(__static, "/logo.png"),
     title: "AutoCam",
   });
 
-  // if main window is ready to show, then destroy the splash window and show up the main window
-  window.once("ready-to-show", () => {
-    splashWindow.destroy();
-    window.show();
-  });
+  // // if main window is ready to show, then destroy the splash window and show up the main window
+  // window.once("ready-to-show", () => {
+  //   splashWindow.destroy();
+  //   window.show();
+  // });
 
   if (isDevelopment) {
     window.webContents.openDevTools();

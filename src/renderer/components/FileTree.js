@@ -6,17 +6,18 @@ import { DownOutlined } from "@ant-design/icons";
 const { Text, Title } = Typography;
 const { DirectoryTree } = Tree;
 
-function FileTree(props) {
+const FileTree = React.memo(function FileTree(props) {
+  console.log("FileTree -> props", props);
+
   const directory = props.directory;
 
-  console.log(directory, directoryTree);
-
   let treeData = [directoryTree(directory)]; // TODO: , { exclude: "/  .git/" })
-  console.log(treeData);
+  console.log("FileTree -> treeData", treeData);
   const expandKey = treeData[0].key;
 
   const onSelect = (keys, event) => {
     console.log("Trigger Select", keys, event);
+    props.onFilesSelect(keys);
   };
 
   const onExpand = () => {
@@ -33,7 +34,7 @@ function FileTree(props) {
           showIcon
           switcherIcon={<DownOutlined />}
           treeData={treeData}
-          defaultExpandedKeys={[expandKey]}
+          expandedKeys={[expandKey]}
           multiple
           onSelect={onSelect}
           onExpand={onExpand}
@@ -42,6 +43,6 @@ function FileTree(props) {
       </section>
     </nav>
   );
-}
+});
 
 export default FileTree;
