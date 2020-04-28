@@ -2,10 +2,27 @@ import React, { Component, PureComponent } from "react";
 import { Tabs, Button } from "antd";
 import * as fs from "fs";
 import Editor from "./Editor";
+import Settings from "./Settings";
+import { CameraOutlined, SettingOutlined } from "@ant-design/icons";
 
 const { TabPane } = Tabs;
 
 class TabManager extends Component {
+  getTitle = (pane) => {
+    return "unSaved" in pane ? (
+      <>
+        <i className="nf nf-dev-techcrunch" />
+        {pane.title}
+        <i class="nf nf-oct-primitive_dot" />
+      </>
+    ) : (
+      <>
+        <i className="nf nf-dev-techcrunch" />
+        {pane.title}
+      </>
+    );
+  };
+
   render() {
     console.log("TabManager -> render -> this.props", this.props);
 
@@ -22,21 +39,38 @@ class TabManager extends Component {
         animated
       >
         {panes.map((pane, i) => {
-          const title =
-            "unSaved" in pane[1] ? `⚈ ${pane[1].title}` : pane[1].title; //\u25CF \u2B24
+          let title, content;
+
+          if (pane[0] === "settings") {
+            title = (
+              <>
+                <SettingOutlined /> {pane[1].title}
+              </>
+            );
+            content = (
+              <div className="Settings">
+                <Settings />
+              </div>
+            );
+          } else {
+            title = this.getTitle(pane[1]);
+            content = (
+              <Editor
+                content={pane[1].content}
+                paneKey={pane[0]}
+                updatePane={this.props.updatePane}
+                activeKey={this.props.activeKey}
+              />
+            );
+          }
 
           return (
             <TabPane
               tab={title}
               key={pane[0]}
-              style={{ height: "calc(100vh - 98px)" }}
+              style={{ height: "calc(100vh - 388px)" }}
             >
-              {/* {pane[1].content} */}
-              <Editor
-                content={pane[1].content}
-                paneKey={pane[0]}
-                updatePane={this.props.updatePane}
-              />
+              {content}
             </TabPane>
           );
         })}

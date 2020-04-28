@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 import { readdirSync, statSync } from "fs";
 import p from "path";
-import { CameraOutlined, FolderFilled } from "@ant-design/icons";
+// import { CameraOutlined, FolderFilled } from "@ant-design/icons";
 
 const constants = {
   DIRECTORY: "directory",
@@ -84,7 +84,13 @@ function directoryTree(path, options, onEachFile, onEachDirectory) {
     item.extension = ext;
     item.type = constants.FILE;
 
-    if (ext === ".tc") item.icon = <CameraOutlined />;
+    switch (ext) {
+      case ".tc":
+        item.icon = <i className="nf nf-dev-techcrunch" />;
+        break;
+      default:
+        item.icon = <i className="nf nf-fa-file_o" />;
+    }
 
     if (options && options.attributes) {
       options.attributes.forEach((attribute) => {
@@ -113,7 +119,7 @@ function directoryTree(path, options, onEachFile, onEachDirectory) {
 
     item.size = item.children.reduce((prev, cur) => prev + cur.size, 0);
     item.type = constants.DIRECTORY;
-    item.icon = <FolderFilled />;
+    item.icon = <i className="nf nf-custom-folder" />;
 
     if (onEachDirectory) {
       onEachDirectory(item, path, stats);

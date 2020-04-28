@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Typography, Tree } from "antd";
-import { directoryTree } from "./utils";
 import { DownOutlined } from "@ant-design/icons";
+
+import { directoryTree } from "../libs/utils";
 
 const { Text, Title } = Typography;
 const { DirectoryTree } = Tree;
@@ -13,6 +14,7 @@ const FileTree = React.memo(function FileTree(props) {
 
   let treeData = [directoryTree(directory)]; // TODO: , { exclude: "/  .git/" })
   console.log("FileTree -> treeData", treeData);
+  const expandKey = treeData[0].key;
 
   const onSelect = (keys, event) => {
     console.log("Trigger Select", keys, event);
@@ -30,7 +32,7 @@ const FileTree = React.memo(function FileTree(props) {
       </header>
       <section className="FileTree">
         <DirectoryTree
-          showIcon
+          // showIcon
           switcherIcon={<DownOutlined />}
           treeData={treeData}
           defaultExpandedKeys={[expandKey]} // TODO: maintaining expand keys state

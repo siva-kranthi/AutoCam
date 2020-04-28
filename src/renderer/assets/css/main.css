@@ -25,6 +25,24 @@ body {
   overflow: hidden;
 }
 
+.Content {
+  overflow: auto;
+  position: relative;
+}
+
+.Tabs {
+  width: 100%;
+  height: calc(100% - 300px);
+  background-image: url(../../../../static/logo.png);
+  background-blend-mode: lighten;
+  background-repeat: no-repeat;
+  background-color: rgb(35, 39, 47, 0.97);
+  background-blend-mode: darken;
+  background-position: center;
+}
+
+/******************************** Scroll bars ********************************/
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -72,25 +90,30 @@ body {
 }
 
 .Title {
-  padding: 3px 15px 2px;
+  padding: 2px 15px;
   border-bottom: 1px solid #1a1d23;
   background-color: #292e38;
-  line-height: 40px;
+  line-height: 35px;
 }
 
 /******************************** Header ********************************/
 
 .Header {
   border-bottom: 1px solid #1a1d23;
+  display: flex;
+  align-items: center;
+}
+
+.header--left,
+.header--right {
+  flex: 1;
 }
 
 .IconsMenu {
   text-align: center;
   padding: 0;
-  font-size: 35px;
+  font-size: 30px;
   list-style: none;
-  height: 48px;
-  line-height: 48px;
   margin: 0;
 }
 
@@ -107,12 +130,56 @@ body {
   color: rgb(255, 255, 255);
 }
 
-.IconsMenu .run {
-  font-size: 30px;
-}
-
 /******************************** Editor ********************************/
 
-.Content {
+/******************************** Nerd Icons ********************************/
+
+.nf {
+  padding-right: 5px;
+}
+
+.nf-dev-techcrunch {
+  color: #ff5364;
+  font-size: 20px;
+  /* line-height: 24px; */
+}
+
+.nf-custom-folder,
+.nf-oct-primitive_dot {
+  color: #ffca18;
+  /* #cbcb41; */
+}
+
+.nf-oct-primitive_dot {
+  color: #ffca18;
+  padding: 0 5px;
+  /* #cbcb41; */
+}
+
+/******************************** Settings ********************************/
+
+.Settings {
+  margin-top: 25px;
+}
+
+.Settings .ant-tabs-nav {
+  font-size: 16px;
+}
+
+/******************************** Log ********************************/
+
+.Log {
+  display: grid;
+  grid-template-rows: 40px 260px;
   overflow: auto;
+  position: absolute;
+  bottom: 0em;
+}
+
+#log {
+  white-space: pre-wrap;
+  word-break: break-all;
+  padding: 15px;
+  margin: 0;
+  background-color: #111b26;
 }

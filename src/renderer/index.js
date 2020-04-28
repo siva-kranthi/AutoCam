@@ -1,7 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
 import App from "./components/App";
 import "antd/dist/antd.dark.css";
+import "./assets/css/nerd-fonts-generated.css";
 import "./assets/css/main.css";
 
 ReactDOM.render(

@@ -34,3 +34,19 @@
 .ant-tabs.ant-tabs-card .ant-tabs-card-bar .ant-tabs-tab-active {
   color: rgb(255, 255, 255, 0.95);
 }
+
+.ant-tabs-nav .ant-tabs-tab:hover {
+  color: rgb(255, 255, 255, 90);
+}
+
+.ant-tabs-nav .ant-tabs-tab .anticon {
+  margin-right: 5px;
+}
+
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: #fff;
+}
+
+.ant-tabs {
+  background-color: #23272f;
+}
