@@ -49,7 +49,12 @@ class TabManager extends Component {
             );
             content = (
               <div className="Settings">
-                <Settings />
+                <Settings
+                  settings={this.props.settings}
+                  onRVChange={this.props.onRVChange}
+                  onSettingsInputChange={this.props.onSettingsInputChange}
+                  onSkipChange={this.props.onSkipChange}
+                />
               </div>
             );
           } else {

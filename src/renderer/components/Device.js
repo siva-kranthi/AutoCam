@@ -15,6 +15,8 @@ const androidVersions = {
   "13": "T",
 };
 
+// TODO: Test with more than one device
+
 class Device extends Component {
   constructor(props) {
     super(props);

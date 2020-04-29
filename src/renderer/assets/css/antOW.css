@@ -50,3 +50,9 @@
 .ant-tabs {
   background-color: #23272f;
 }
+
+.ant-tabs-tabpane .ant-tabs,
+.ant-tabs .ant-tabs-left-content {
+  height: 100%;
+  overflow: auto;
+}

@@ -1,23 +1,43 @@
 import Convert from "ansi-to-html";
 import spawn from "cross-spawn";
+import { notification } from "antd";
+
+import { getTCPaths } from "./file";
 
 let $ = (selector) => document.querySelector(selector);
 const convertANSI = new Convert();
 
-function streamLog() {
+function streamLog(files) {
   let HTML = "";
+  let combinations = false;
   const logObj = $("#log");
+  const TCPaths = files.length !== 0 ? getTCPaths(files) : [];
+  console.log("streamLog -> TCPaths", TCPaths);
+
+  if (Array.isArray(TCPaths)) {
+    if (TCPaths.length === 0) {
+      notification.error({
+        message: "Execution not Started",
+        description: "Select at least one TC for execution",
+      });
+      return;
+    }
+  } else {
+    combinations = true;
+  }
+
+  // if combinations
+
+  const child = spawn("npm", ["-v"]);
+  child.stdout.setEncoding("utf8");
+  child.stderr.setEncoding("utf8");
 
   const updateLog = (data) => {
     console.log("updateLog -> data", data);
     HTML = convertANSI.toHtml(data);
-    logObj.insertAdjacentHTML("beforeend", HTML);
+    logObj.insertAdjacentHTML("beforeend", HTML); // More optimized way than innerHTML
     logObj.scrollTop = logObj.scrollHeight - logObj.clientHeight; // To Scroll to the bottom
   };
-
-  const child = spawn("yarn", ["dist"]);
-  child.stdout.setEncoding("utf8");
-  child.stderr.setEncoding("utf8");
 
   // Reading Stdout data
   child.stdout.on("data", updateLog);

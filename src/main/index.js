@@ -43,7 +43,7 @@ function createMainWindow() {
       webSecurity: false,
     },
     icon: path.join(__static, "/logo.png"),
-    title: "AutoCam",
+    title: "AutoCam - E2E Camera Automation",
   });
 
   // // if main window is ready to show, then destroy the splash window and show up the main window

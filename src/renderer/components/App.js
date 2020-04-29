@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import p from "path";
-import * as fs from "fs";
+import fs from "fs";
 import { remote } from "electron";
 import { HotKeys, GlobalHotKeys, configure } from "react-hotkeys";
+import Store from "electron-store";
 
 import FileTree from "./FileTree";
 import Header from "./Header";
 import TabManager from "./TabManager";
-import { isFile } from "../libs/utils";
+import { isFile } from "../libs/file";
+import streamLog from "../libs/log";
 
 const dialog = remote.dialog;
 
@@ -15,13 +17,30 @@ configure({
   ignoreTags: [],
 });
 
+const defaults = {
+  settings: {
+    skip: false,
+    record_video: false,
+    iterations: "",
+    re_run: "",
+    loop: "",
+    sheet: "",
+  },
+};
+
+const store = new Store({ defaults });
+console.log("store.path", store.path);
+
 class App extends Component {
   state = {
     // Icons
-    directory: "C:\\Dev\\AutoCam\\temp\\Camera",
+    directory: p.join(__static, "/SART/TestCases/Camera"),
 
     // FileTree
     files: [],
+
+    // Settings
+    settings: store.get("settings"),
 
     // TabManager
     activeKey: "",
@@ -36,6 +55,10 @@ class App extends Component {
 
   openSettings = () => {
     this.addPane("settings", "Settings");
+  };
+
+  runSART = () => {
+    streamLog(this.state.files);
   };
 
   // FileTree
@@ -68,6 +91,32 @@ class App extends Component {
         this.setState({ panes });
       });
     }
+  };
+
+  // Settings
+
+  onRVChange = (checked, e) => {
+    const { settings } = this.state;
+    settings.record_video = checked;
+    store.set("settings.record_video", checked);
+    this.setState({ settings });
+  };
+
+  onSkipChange = (checked, e) => {
+    const { settings } = this.state;
+    settings.skip = checked;
+    store.set("settings.skip", checked);
+    this.setState({ settings });
+  };
+
+  onSettingsInputChange = (e) => {
+    const id = e.target.id;
+    const value = e.target.value;
+
+    const { settings } = this.state;
+    settings[id] = value;
+    store.set(`settings.${id}`, value);
+    this.setState({ settings });
   };
 
   // TabManager
@@ -148,7 +197,7 @@ class App extends Component {
   };
 
   render() {
-    console.log("App Render");
+    console.log("App -> Render -> State", this.state);
 
     const handlers = { saveFile: this.saveFile };
     const keyMap = {
@@ -162,6 +211,7 @@ class App extends Component {
           setDirectory={this.setDirectory}
           saveFile={this.saveFile}
           openSettings={this.openSettings}
+          runSART={this.runSART}
         ></Header>
         <main className="Body">
           <FileTree
@@ -177,6 +227,10 @@ class App extends Component {
                   changePane={this.changePane}
                   updatePane={this.updatePane}
                   editPane={this.editPane}
+                  settings={this.state.settings}
+                  onRVChange={this.onRVChange}
+                  onSettingsInputChange={this.onSettingsInputChange}
+                  onSkipChange={this.onSkipChange}
                 />
               )}
             </div>

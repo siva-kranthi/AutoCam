@@ -1,5 +1,24 @@
 @import url("./antOW.css");
 
+/******************************** Common Styles ********************************/
+
+.bold {
+  font-weight: bold;
+  color: rgb(255, 255, 255, 0.8);
+}
+
+.margin-top-9 {
+  margin-top: 9px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/******************************** Layout Styles ********************************/
+
 body {
   height: 100%;
   width: 100%;
@@ -110,11 +129,7 @@ body {
 }
 
 .IconsMenu {
-  text-align: center;
-  padding: 0;
   font-size: 30px;
-  list-style: none;
-  margin: 0;
 }
 
 .IconsMenu li {
@@ -159,11 +174,24 @@ body {
 /******************************** Settings ********************************/
 
 .Settings {
-  margin-top: 25px;
+  margin: 10px 0;
+  height: 100%;
 }
 
 .Settings .ant-tabs-nav {
   font-size: 16px;
+}
+
+.Settings .ant-input[type="number"] {
+  width: 75px;
+}
+
+.Settings .ant-input[type="text"] {
+  width: 300px;
+}
+
+.settings-list li {
+  margin-bottom: 30px;
 }
 
 /******************************** Log ********************************/
@@ -174,6 +202,7 @@ body {
   overflow: auto;
   position: absolute;
   bottom: 0em;
+  width: 100%;
 }
 
 #log {

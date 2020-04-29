@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
 import * as path from "path";
 
-delete window.require;
-delete window.exports;
-delete window.module;
+// delete window.require;
+// delete window.exports;
+// delete window.module;
 
 import MonacoEditor, { ControlledEditor, monaco } from "@monaco-editor/react";
 

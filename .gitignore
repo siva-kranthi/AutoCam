@@ -5,3 +5,4 @@ thumbs.db
 .idea/
 temp
 src/renderer/components/temp.js
+static/SART

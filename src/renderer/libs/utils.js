@@ -1,1 +1,1 @@
-export { directoryTree, isFile } from "./file";
+export { directoryTree, isFile, getTCPaths } from "./file";

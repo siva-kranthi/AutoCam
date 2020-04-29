@@ -1,6 +1,7 @@
 import React from "react";
 import { readdirSync, statSync } from "fs";
 import p from "path";
+import glob from "glob";
 // import { CameraOutlined, FolderFilled } from "@ant-design/icons";
 
 const constants = {
@@ -134,4 +135,67 @@ function isFile(path) {
   return !!p.extname(path);
 }
 
-export { directoryTree, isFile };
+function isTCFile(path) {
+  return !!(p.extname(path) === ".tc");
+}
+
+function isExcelFile(path) {
+  return !!(p.extname(path) === ".xls" || p.extname(path) === ".xlsx");
+}
+
+function isChildOf(child, parent) {
+  if (child === parent) return true;
+
+  const parentTokens = parent.split("/").filter((i) => i.length);
+  const chilsTokens = child.split("/");
+
+  return parentTokens.every((t, i) => chilsTokens[i] === t);
+}
+
+function getTCPaths(paths) {
+  console.log("getTCPaths -> paths", paths);
+  const globOptions = {
+    absolute: true,
+  };
+  let TCPaths = [];
+  let excelPaths = [];
+  let dirPaths = [];
+  let parentPaths = [];
+
+  for (let path of paths) {
+    console.log("getTCs -> TCPaths", TCPaths);
+
+    path = path.replace(/\\/g, "/");
+    console.log("getTCs -> path", path);
+
+    if (isFile(path)) {
+      if (isTCFile(path)) {
+        TCPaths.push(path);
+      } else if (isExcelFile(path)) {
+        excelPaths.push(path);
+      }
+    }
+    // Directory
+    else {
+      parentPaths = dirPaths.filter((dirPath) => isChildOf(path, dirPath));
+      if (parentPaths.length) {
+        console.warn(path, "already processed", parentPaths);
+        break;
+      }
+
+      let files = glob.sync(path + "/**/*.tc", globOptions);
+      console.log("getTCPaths -> files", files);
+      TCPaths = [...TCPaths, ...files];
+    }
+  }
+
+  console.log("getTCPaths -> TCPaths, excelPaths", TCPaths, excelPaths);
+
+  if (TCPaths.length !== 0) return [...new Set(TCPaths)];
+
+  if (excelPaths.length !== 0) return excelPaths[0];
+
+  return [];
+}
+
+export { directoryTree, isFile, getTCPaths };

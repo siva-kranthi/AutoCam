@@ -6,9 +6,7 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import { remote } from "electron";
-import { Select } from "antd";
 
-import streamLog from "../libs/log";
 import Device from "./Device";
 
 const dialog = remote.dialog;
@@ -30,10 +28,6 @@ function Header(props) {
     props.setDirectory(dir[0]);
   };
 
-  const runSART = () => {
-    streamLog();
-  };
-
   return (
     <header className="Header">
       <div className="header--left">
@@ -52,7 +46,7 @@ function Header(props) {
             </a>
           </li>
           <li>
-            <a title="Run Test cases" onClick={runSART}>
+            <a title="Run Test cases" onClick={props.runSART}>
               <PlayCircleOutlined />
               {/* <i class="nf nf-fa-play" /> */}
             </a>
