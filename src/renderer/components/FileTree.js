@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Typography, Tree, message } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { DownOutlined, FolderAddOutlined } from "@ant-design/icons";
 import fs from "fs";
 
 import { directoryTree } from "../libs/file";
@@ -30,7 +30,7 @@ const FileTree = React.memo(function FileTree(props) {
 
   const onSelect = (keys, event) => {
     console.log("Trigger Select", keys, event);
-    props.onFilesSelect(keys);
+    props.onSelect(keys);
   };
 
   const onExpand = () => {
@@ -38,9 +38,14 @@ const FileTree = React.memo(function FileTree(props) {
   };
 
   return (
-    <nav className="FileTreeContainer">
+    <>
       <header className="Title">
-        <Text strong={true}>TEST CASES EXPLORER</Text>
+        <Text strong={true}>{props.title}</Text>
+        <div className="Icon">
+          <a title="Open the TCs Folder" onClick={props.onClick}>
+            <FolderAddOutlined />
+          </a>
+        </div>
       </header>
       <section className="FileTree">
         <DirectoryTree
@@ -48,13 +53,13 @@ const FileTree = React.memo(function FileTree(props) {
           switcherIcon={<DownOutlined />}
           treeData={treeData}
           defaultExpandedKeys={[expandKey]} // TODO: maintaining expand keys state
-          multiple
+          multiple={props.multiple}
           onSelect={onSelect}
           onExpand={onExpand}
           // ShowLine
         />
       </section>
-    </nav>
+    </>
   );
 });
 

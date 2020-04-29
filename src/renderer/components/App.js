@@ -34,7 +34,8 @@ console.log("store.path", store.path);
 class App extends Component {
   state = {
     // Icons
-    directory: p.join(__static, "/SART/TestCases/Camera"),
+    TCsDirectory: p.join(__static, "/SART/TestCases/Camera"),
+    resultsDirectory: p.join(__static, "/SART/Results"),
 
     // FileTree
     files: [],
@@ -49,10 +50,6 @@ class App extends Component {
 
   // Header
 
-  setDirectory = (directory) => {
-    this.setState({ directory });
-  };
-
   openSettings = () => {
     this.addPane("settings", "Settings");
   };
@@ -62,6 +59,35 @@ class App extends Component {
   };
 
   // FileTree
+
+  showDialog = (title, buttonLabel) => {
+    const options = {
+      title: "Select Test Cases Folder",
+      buttonLabel: "Select TCs Folder",
+      properties: ["openDirectory"],
+    };
+
+    const dir = dialog.showOpenDialogSync(options);
+    console.log("App -> showDialog -> dir", dir);
+    return dir;
+  };
+
+  setResultsDirectory = () => {
+    const title = "Select Results Folder";
+    const buttonLabel = "Select Results Folder";
+    const resultsDirectory = this.showDialog(title, buttonLabel);
+
+    resultsDirectory &&
+      this.setState({ resultsDirectory: resultsDirectory[0] });
+  };
+
+  setTCsDirectory = () => {
+    const title = "Select Test Cases Folder";
+    const buttonLabel = "Select TCs Folder";
+    const TCsDirectory = this.showDialog(title, buttonLabel);
+
+    TCsDirectory && this.setState({ TCsDirectory: TCsDirectory[0] });
+  };
 
   onFilesSelect = (files) => {
     this.setState({ files });
@@ -208,16 +234,27 @@ class App extends Component {
       <>
         <GlobalHotKeys keyMap={keyMap} handlers={handlers} />
         <Header
-          setDirectory={this.setDirectory}
           saveFile={this.saveFile}
           openSettings={this.openSettings}
           runSART={this.runSART}
         ></Header>
         <main className="Body">
-          <FileTree
-            directory={this.state.directory}
-            onFilesSelect={this.onFilesSelect}
-          />
+          <nav className="FileTreeContainer">
+            <FileTree
+              directory={this.state.TCsDirectory}
+              onSelect={this.onFilesSelect}
+              title="TEST CASES EXPLORER"
+              multiple={true}
+              onClick={this.setTCsDirectory}
+            />
+            <FileTree
+              directory={this.state.resultsDirectory}
+              onSelect={this.onFilesSelect}
+              title="RESULTS EXPLORER"
+              multiple={false}
+              onClick={this.setResultsDirectory}
+            />
+          </nav>
           <section className="Content">
             <div className="Tabs">
               {Object.keys(this.state.panes).length > 0 && (
