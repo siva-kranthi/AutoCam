@@ -1,8 +1,10 @@
 "use strict";
 
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
 import { format as formatUrl } from "url";
+
+// Menu.setApplicationMenu(false);
 
 if (module.hot) {
   module.hot.accept();
@@ -36,7 +38,7 @@ function createMainWindow() {
     minWidth: 830,
     minHeight: 430,
     backgroundColor: "#2a2522",
-    // show: false,
+    show: false,
     titleBarStyle: "hidden",
     webPreferences: {
       nodeIntegration: true,
@@ -45,6 +47,9 @@ function createMainWindow() {
     icon: path.join(__static, "/logo.png"),
     title: "AutoCam - E2E Camera Automation",
   });
+
+  window.maximize();
+  window.show();
 
   // // if main window is ready to show, then destroy the splash window and show up the main window
   // window.once("ready-to-show", () => {

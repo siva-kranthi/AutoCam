@@ -1,9 +1,10 @@
 import React, { Component, PureComponent } from "react";
 import { Tabs, Button } from "antd";
-import * as fs from "fs";
+import { CameraOutlined, SettingOutlined } from "@ant-design/icons";
+
 import Editor from "./Editor";
 import Settings from "./Settings";
-import { CameraOutlined, SettingOutlined } from "@ant-design/icons";
+import Result from "./Result";
 
 const { TabPane } = Tabs;
 
@@ -13,7 +14,7 @@ class TabManager extends Component {
       <>
         <i className="nf nf-dev-techcrunch" />
         {pane.title}
-        <i class="nf nf-oct-primitive_dot" />
+        <i className="nf nf-oct-primitive_dot" />
       </>
     ) : (
       <>
@@ -55,6 +56,17 @@ class TabManager extends Component {
                   onSettingsInputChange={this.props.onSettingsInputChange}
                   onSkipChange={this.props.onSkipChange}
                 />
+              </div>
+            );
+          } else if (pane[1].title === "Result") {
+            title = (
+              <>
+                <i className="nf nf-seti-image" /> {pane[1].title}
+              </>
+            );
+            content = (
+              <div className="Result">
+                <Result content={pane[1].content} resultPath={pane[0]} />
               </div>
             );
           } else {

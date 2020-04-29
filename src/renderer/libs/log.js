@@ -1,15 +1,18 @@
 import Convert from "ansi-to-html";
 import spawn from "cross-spawn";
 import { notification } from "antd";
+import p from "path";
 
 import { getTCPaths } from "./file";
 
 let $ = (selector) => document.querySelector(selector);
 const convertANSI = new Convert();
 
-function streamLog(files) {
+function streamLog(files, settings) {
   let HTML = "";
   let combinations = false;
+  let params = [];
+  const SARTPath = p.join(__static, "/SART/SART.exe");
   const logObj = $("#log");
   const TCPaths = files.length !== 0 ? getTCPaths(files) : [];
   console.log("streamLog -> TCPaths", TCPaths);
@@ -26,7 +29,23 @@ function streamLog(files) {
     combinations = true;
   }
 
-  // if combinations
+  if (!combinations) {
+    for (let [key, value] of Object.entries(settings.general)) {
+      if (["iterations", "re_run", "loop"].includes(key)) value = Number(value);
+      if (value) {
+        if (typeof value === "boolean") params.push(`--${key}`);
+        else params.push(`--${key}`, value);
+      }
+    }
+  } else {
+    for (let [key, value] of Object.entries(settings.combination)) {
+      if (value) {
+        if (typeof value === "boolean") params.push(`--${key}`);
+        else params.push(`--${key}`, value);
+      }
+    }
+  }
+  console.log("streamLog -> params", params);
 
   const child = spawn("npm", ["-v"]);
   child.stdout.setEncoding("utf8");

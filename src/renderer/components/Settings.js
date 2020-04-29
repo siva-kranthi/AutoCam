@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Tabs, Input, Switch } from "antd";
+import { Tabs, Input, Switch, InputNumber } from "antd";
 import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
 
 const { TabPane } = Tabs;
@@ -31,7 +31,7 @@ class Settings extends Component {
                   checkedChildren={<CheckOutlined />}
                   unCheckedChildren={<CloseOutlined />}
                   id="skip"
-                  checked={settings.skip}
+                  checked={settings.general.skip}
                   onChange={this.props.onSkipChange}
                 />
               </div>
@@ -46,7 +46,7 @@ class Settings extends Component {
                   checkedChildren={<CheckOutlined />}
                   unCheckedChildren={<CloseOutlined />}
                   id="record_video"
-                  checked={settings.record_video}
+                  checked={settings.general.record_video}
                   onChange={this.props.onRVChange}
                 />
               </div>
@@ -58,10 +58,12 @@ class Settings extends Component {
               </div>
               <div className="margin-top-9">
                 <Input
+                  min={1}
+                  max={50}
                   placeholder="Number of repetitions"
                   id="iterations"
                   type="number"
-                  value={settings.iterations}
+                  value={settings.general.iterations}
                   onChange={this.props.onSettingsInputChange}
                 />
               </div>
@@ -73,10 +75,12 @@ class Settings extends Component {
               </div>
               <div className="margin-top-9">
                 <Input
+                  min={1}
+                  max={10}
                   placeholder="Rerun count"
                   id="re_run"
                   type="number"
-                  value={settings.re_run}
+                  value={settings.general.re_run}
                   onChange={this.props.onSettingsInputChange}
                 />
               </div>
@@ -88,10 +92,12 @@ class Settings extends Component {
               </div>
               <div className="margin-top-9">
                 <Input
-                  placeholder="Number of repetitions"
+                  min={1}
+                  max={50}
+                  placeholder="Loop Count"
                   id="loop"
                   type="number"
-                  value={settings.loop}
+                  value={settings.general.loop}
                   onChange={this.props.onSettingsInputChange}
                 />
               </div>
@@ -123,7 +129,7 @@ class Settings extends Component {
                   placeholder="Sheet Name/Number"
                   id="sheet"
                   onChange={this.props.onSettingsInputChange}
-                  value={settings.sheet}
+                  value={settings.combination.sheet}
                 />
               </div>
             </li>

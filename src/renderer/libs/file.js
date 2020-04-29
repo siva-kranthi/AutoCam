@@ -93,6 +93,11 @@ function directoryTree(path, options, onEachFile, onEachDirectory) {
         item.icon = <i className="nf nf-fa-file_o" />;
     }
 
+    if (name === "summary.json") {
+      item.icon = <i className="nf nf-seti-image" />;
+      item.title = "AutoCam Result";
+    }
+
     if (options && options.attributes) {
       options.attributes.forEach((attribute) => {
         item[attribute] = stats[attribute];

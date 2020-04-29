@@ -19,12 +19,14 @@ configure({
 
 const defaults = {
   settings: {
-    skip: false,
-    record_video: false,
-    iterations: "",
-    re_run: "",
-    loop: "",
-    sheet: "",
+    general: {
+      skip: false,
+      record_video: false,
+      iterations: "",
+      re_run: "",
+      loop: "",
+    },
+    combination: { sheet: "" },
   },
 };
 
@@ -55,7 +57,7 @@ class App extends Component {
   };
 
   runSART = () => {
-    streamLog(this.state.files);
+    streamLog(this.state.files, this.state.settings);
   };
 
   // FileTree
@@ -105,6 +107,22 @@ class App extends Component {
     }
   };
 
+  onResultSelect = (files) => {
+    this.setState({ files });
+    console.log("App -> onResultSelect -> files", files);
+
+    if (files.length == 1) {
+      let file = files[0];
+      if (isFile(file)) {
+        fs.readFile(file, "utf8", (err, content) => {
+          if (err) throw err;
+          // const name = p.basename(file);
+          this.addPane(file, "Result", content);
+        });
+      }
+    }
+  };
+
   // Editor
 
   saveFile = () => {
@@ -123,15 +141,15 @@ class App extends Component {
 
   onRVChange = (checked, e) => {
     const { settings } = this.state;
-    settings.record_video = checked;
-    store.set("settings.record_video", checked);
+    settings.general.record_video = checked;
+    store.set("settings.general.record_video", checked);
     this.setState({ settings });
   };
 
   onSkipChange = (checked, e) => {
     const { settings } = this.state;
-    settings.skip = checked;
-    store.set("settings.skip", checked);
+    settings.general.skip = checked;
+    store.set("settings.general.skip", checked);
     this.setState({ settings });
   };
 
@@ -140,8 +158,9 @@ class App extends Component {
     const value = e.target.value;
 
     const { settings } = this.state;
-    settings[id] = value;
-    store.set(`settings.${id}`, value);
+    const category = ["sheet"].includes(id) ? "combination" : "general";
+    settings[category][id] = value;
+    store.set(`settings.${category}.${id}`, value);
     this.setState({ settings });
   };
 
@@ -249,7 +268,7 @@ class App extends Component {
             />
             <FileTree
               directory={this.state.resultsDirectory}
-              onSelect={this.onFilesSelect}
+              onSelect={this.onResultSelect}
               title="RESULTS EXPLORER"
               multiple={false}
               onClick={this.setResultsDirectory}
@@ -274,7 +293,7 @@ class App extends Component {
             <div className="Log">
               <header className="Title">
                 <span className="ant-typography">
-                  <strong>Log</strong>
+                  <strong>LOG</strong>
                 </span>
               </header>
               <pre id="log">

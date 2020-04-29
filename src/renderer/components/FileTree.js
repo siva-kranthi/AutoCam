@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Tree, message } from "antd";
+import { Typography, Tree, notification } from "antd";
 import { DownOutlined, FolderAddOutlined } from "@ant-design/icons";
 import fs from "fs";
 
@@ -16,14 +16,17 @@ const FileTree = React.memo(function FileTree(props) {
   const directory = props.directory;
 
   if (!fs.existsSync(directory)) {
-    message.error(`Default Camera TestCases folder is not found ${directory}`);
+    notification.error({
+      message: "Folder not found",
+      description: `Default Camera TestCases folder is not found ${directory}`,
+    });
     treeData = null;
   } else {
     treeData = [
       directoryTree(directory, {
         exclude: /.(git|svn|hg|CVS|DS_Store|cache)|node_modules/,
       }),
-    ]; // TODO: , { exclude: "/  .git/" })
+    ];
     console.log("FileTree -> treeData", treeData);
     expandKey = treeData[0].key;
   }
