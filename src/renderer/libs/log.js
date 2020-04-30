@@ -37,6 +37,8 @@ function streamLog(files, settings) {
         else params.push(`--${key}`, value);
       }
     }
+    params.push(`--test_cases`);
+    params = params.concat(TCPaths);
   } else {
     for (let [key, value] of Object.entries(settings.combination)) {
       if (value) {
@@ -44,10 +46,11 @@ function streamLog(files, settings) {
         else params.push(`--${key}`, value);
       }
     }
+    params.push(`--combinations_path`, TCPaths);
   }
   console.log("streamLog -> params", params);
 
-  const child = spawn("npm", ["-v"]);
+  const child = spawn(SARTPath, params);
   child.stdout.setEncoding("utf8");
   child.stderr.setEncoding("utf8");
 

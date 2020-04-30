@@ -49,7 +49,7 @@ function isRegExp(regExp) {
  * @param  {function} onEachDirectory
  * @return {Object}
  */
-function directoryTree(path, options, onEachFile, onEachDirectory) {
+function directoryTree(path, options, result, onEachFile, onEachDirectory) {
   const name = p.basename(path);
   path = options && options.normalizePath ? normalizePath(path) : path;
   const item = { path, name };
@@ -93,7 +93,7 @@ function directoryTree(path, options, onEachFile, onEachDirectory) {
         item.icon = <i className="nf nf-fa-file_o" />;
     }
 
-    if (name === "summary.json") {
+    if (result && name === "summary.json") {
       item.icon = <i className="nf nf-seti-image" />;
       item.title = "AutoCam Result";
     }
@@ -119,7 +119,13 @@ function directoryTree(path, options, onEachFile, onEachDirectory) {
 
     item.children = dirData
       .map((child) =>
-        directoryTree(p.join(path, child), options, onEachFile, onEachDirectory)
+        directoryTree(
+          p.join(path, child),
+          options,
+          result,
+          onEachFile,
+          onEachDirectory
+        )
       )
       .filter((e) => !!e);
 

@@ -22,10 +22,16 @@ const FileTree = React.memo(function FileTree(props) {
     });
     treeData = null;
   } else {
+    let result = false;
+    if (props.title === "RESULTS EXPLORER") result = true;
     treeData = [
-      directoryTree(directory, {
-        exclude: /.(git|svn|hg|CVS|DS_Store|cache)|node_modules/,
-      }),
+      directoryTree(
+        directory,
+        {
+          exclude: /.(git|svn|hg|CVS|DS_Store|cache)|node_modules/,
+        },
+        result
+      ),
     ];
     console.log("FileTree -> treeData", treeData);
     expandKey = treeData[0].key;
