@@ -7,6 +7,13 @@ import { getTCPaths } from "./file";
 
 let $ = (selector) => document.querySelector(selector);
 const convertANSI = new Convert();
+const colors = {
+  DEBUG: "#AAA",
+  INFO: "#0A0",
+  WARNI: "#A50",
+  ERROR: "#A00",
+  CRITI: "#A00",
+};
 
 function streamLog(files, settings) {
   let HTML = "";
@@ -50,13 +57,18 @@ function streamLog(files, settings) {
   }
   console.log("streamLog -> params", params);
 
-  const child = spawn(SARTPath, params);
+  const child = spawn("npm", ["-v"]);
   child.stdout.setEncoding("utf8");
   child.stderr.setEncoding("utf8");
+  logObj.insertAdjacentHTML(
+    "beforeend",
+    "<h2 class='divider line glow'>New Execution</h2>"
+  );
 
   const updateLog = (data) => {
     console.log("updateLog -> data", data);
-    HTML = convertANSI.toHtml(data);
+    // HTML = convertANSI.toHtml(data);
+    HTML = colorize(data);
     logObj.insertAdjacentHTML("beforeend", HTML); // More optimized way than innerHTML
     logObj.scrollTop = logObj.scrollHeight - logObj.clientHeight; // To Scroll to the bottom
   };
@@ -82,6 +94,14 @@ function streamLog(files, settings) {
   child.stderr.on("data", (data) => {
     console.error("streamLog -> stderr data", data);
   });
+}
+
+function colorize(log) {
+  for (let [key, value] of Object.entries(log)) {
+    if (log.includes(key)) {
+      log = `<span style="color:${colors[key]}">${log}</span>`;
+    }
+  }
 }
 
 export default streamLog;

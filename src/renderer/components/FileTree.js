@@ -1,6 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Typography, Tree, notification } from "antd";
-import { DownOutlined, FolderAddOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  FolderAddOutlined,
+  SyncOutlined,
+} from "@ant-design/icons";
 import fs from "fs";
 
 import { directoryTree } from "../libs/file";
@@ -8,12 +12,19 @@ import { directoryTree } from "../libs/file";
 const { Text, Title } = Typography;
 const { DirectoryTree } = Tree;
 
+function useForceUpdate() {
+  const [value, setValue] = useState(0);
+  console.log("=====================FileTree -> value", value); // integer state
+  return () => setValue((value) => ++value); // update the state to force render
+}
+
 const FileTree = React.memo(function FileTree(props) {
   console.log("FileTree -> props", props);
   let treeData;
   let expandKey;
 
   const directory = props.directory;
+  const forceUpdate = useForceUpdate();
 
   if (!fs.existsSync(directory)) {
     notification.error({
@@ -51,8 +62,11 @@ const FileTree = React.memo(function FileTree(props) {
       <header className="Title">
         <Text strong={true}>{props.title}</Text>
         <div className="Icon">
-          <a title="Open the TCs Folder" onClick={props.onClick}>
+          <a title="Open the Folder" onClick={props.onClick}>
             <FolderAddOutlined />
+          </a>
+          <a title="Refresh" onClick={forceUpdate}>
+            <SyncOutlined />
           </a>
         </div>
       </header>
@@ -65,7 +79,7 @@ const FileTree = React.memo(function FileTree(props) {
           multiple={props.multiple}
           onSelect={onSelect}
           onExpand={onExpand}
-          // ShowLine
+          ShowLine
         />
       </section>
     </>
